@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Aydus_BannerUploader layout
+ *
+ * @category   Aydus
+ * @package    Aydus_BannerUploader
+ * @author     Aydus <davidt@aydus.com>
+ */
+-->
+
+<layout>
+    <adminhtml_banner_edit>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><script>aydus/banneruploader.js</script></action>
+        </reference>
+    </adminhtml_banner_edit>
+    
+    <adminhtml_banneruploader_index>
+    
+        <remove name="footer" />
+        <remove name="head" />
+        <reference name="left">
+            <block name="wysiwyg_images.js" type="adminhtml/cms_wysiwyg_images_content" template="cms/browser/js.phtml" />
+            <block name="wysiwyg_images.tree" type="adminhtml/cms_wysiwyg_images_tree" template="cms/browser/tree.phtml" />
+        </reference>
+        <reference name="content">
+            <block name="wysiwyg_images.content"  type="adminhtml/cms_wysiwyg_images_content" template="aydus/banneruploader/content.phtml">
+                <block name="wysiwyg_images.newfolder" type="adminhtml/cms_wysiwyg_images_content_newfolder" template="cms/browser/content/newfolder.phtml" />
+		        <block type="aydus_banneruploader/adminhtml_banneruploader" name="bannerUploader"  />
+            </block>
+        </reference>
+    
+    </adminhtml_banneruploader_index>
+    
+</layout>
