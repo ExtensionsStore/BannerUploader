@@ -23,4 +23,4 @@ on the Banner Images button on top of the banner content:
 
 <img src="md/popup.png" />
 
-You can also save banner content as templates to be used by other templates.
+You can also save banner content as templates to be used by other banners.
