@@ -103,7 +103,7 @@ class Aydus_BannerUploader_Model_Observer
             
             $contentField = $elements[1];
             $elements[1] = $saveTemplate;
-            if ($deleteTemplate){
+            if (@$deleteTemplate){
                 $elements[2] = $deleteTemplate;
                 $elements[3] = $templateName;
                 $elements[4] = $loadTemplate;
