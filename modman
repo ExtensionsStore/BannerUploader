@@ -1,5 +1,5 @@
-app/code/community/Aydus/BannerUploader/                               app/code/community/Aydus/BannerUploader/
-app/design/adminhtml/default/default/layout/aydus/banneruploader.xml   app/design/adminhtml/default/default/layout/aydus/banneruploader.xml
-app/design/adminhtml/default/default/template/aydus/banneruploader/    app/design/adminhtml/default/default/template/aydus/banneruploader/
-app/etc/modules/Aydus_BannerUploader.xml                               app/etc/modules/Aydus_BannerUploader.xml
-skin/adminhtml/default/default/aydus/banneruploader.js                 skin/adminhtml/default/default/aydus/banneruploader.js
+app/code/community/ExtensionsStore/BannerUploader/                               app/code/community/ExtensionsStore/BannerUploader/
+app/design/adminhtml/default/default/layout/extensions_store/banneruploader.xml  app/design/adminhtml/default/default/layout/extensions_store/banneruploader.xml
+app/design/adminhtml/default/default/template/extensions_store/banneruploader/   app/design/adminhtml/default/default/template/extensions_store/banneruploader/
+app/etc/modules/ExtensionsStore_BannerUploader.xml                               app/etc/modules/ExtensionsStore_BannerUploader.xml
+skin/adminhtml/default/default/extensions_store/banneruploader.js                skin/adminhtml/default/default/extensions_store/banneruploader.js

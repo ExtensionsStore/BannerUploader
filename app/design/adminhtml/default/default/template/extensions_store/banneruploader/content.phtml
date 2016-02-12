@@ -1,0 +1,25 @@
+<?php 
+/**
+ * ExtensionsStore_BannerUploader content
+ *
+ * @category   ExtensionsStore
+ * @package    ExtensionsStore_BannerUploader
+ * @author     ExtensionsStore <Extensions Store <admin@extensions-store.com>>
+ */
+?>
+
+<?php echo $this->getChildHtml('wysiwyg_images.js') ?>
+
+<div class="content-header skip-header" id="content_header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3 id="content_header_text"><?php echo $this->getHeaderText() ?></h3></td>
+            <td class="form-buttons">
+                <?php echo $this->getButtonsHtml() ?>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="contents-newfolder" class="no-display"><?php echo $this->getChildHtml('wysiwyg_images.newfolder') ?></div>
+<div id="contents-uploader"><?php echo $this->getChildHtml('bannerUploader') ?></div>

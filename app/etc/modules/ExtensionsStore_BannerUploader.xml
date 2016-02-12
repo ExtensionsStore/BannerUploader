@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * ExtensionsStore_BannerUploader module
+ *
+ * @category   ExtensionsStore
+ * @package    ExtensionsStore_BannerUploader
+ * @author     ExtensionsStore <Extensions Store <admin@extensions-store.com>>
+ */
+-->
+<config>
+    <modules>
+        <ExtensionsStore_BannerUploader>
+             <active>true</active>
+             <codePool>community</codePool>
+        </ExtensionsStore_BannerUploader>
+    </modules>
+</config>

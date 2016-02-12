@@ -1,9 +1,9 @@
 {
-    "name": "aydus/banneruploader",
+    "name": "extensions-store/banneruploader",
     "license": "GPL-3.0",
     "type": "magento-module",
     "description": "Allows client admin to set Enterprise banner images and links without having to touch HTML.",
-    "homepage": "https://github.com/aydus/BannerUploader.git",
+    "homepage": "https://github.com/ExtensionsStore/BannerUploader.git",
     "require": {
         "php": ">=5.3",
         "magento-hackathon/magento-composer-installer": "*"
@@ -11,7 +11,7 @@
     "authors": [
         {
             "name": "David Tay",
-            "email": "davidt@aydus.com",
+            "email": "Extensions Store <admin@extensions-store.com>",
             "role": "Author/Maintainer"
         }
     ]
