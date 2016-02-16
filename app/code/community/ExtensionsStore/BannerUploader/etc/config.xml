@@ -11,7 +11,7 @@
 <config>
     <modules>
         <ExtensionsStore_BannerUploader>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </ExtensionsStore_BannerUploader>
     </modules>
     <phpunit>
@@ -36,28 +36,28 @@
     	<events>
             <cms_wysiwyg_config_prepare>
                 <observers>
-                    <extensions_store_banneruploader>
+                    <extensions_store_banneruploader_prepare_wysiwyg_plugin_config>
                         <class>extensions_store_banneruploader/observer</class>
                         <method>prepareWysiwygPluginConfig</method>
-                    </extensions_store_banneruploader>
+                    </extensions_store_banneruploader_prepare_wysiwyg_plugin_config>
                 </observers>
             </cms_wysiwyg_config_prepare>    
             <adminhtml_block_html_before>
                 <observers>
-                    <extensions_store_banneruploader>
+                    <extensions_store_banneruploader_add_template_fields>
                         <class>extensions_store_banneruploader/observer</class>
                         <method>addTemplateFields</method>
-                    </extensions_store_banneruploader>
+                    </extensions_store_banneruploader_add_template_fields>
                 </observers>
             </adminhtml_block_html_before>    
             <enterprise_banner_save_after>
                 <observers>
-                    <extensions_store_banneruploader>
+                    <extensions_store_banneruploader_save_template>
                         <class>extensions_store_banneruploader/observer</class>
                         <method>saveTemplate</method>
-                    </extensions_store_banneruploader>
+                    </extensions_store_banneruploader_save_template>
                 </observers>
-            </enterprise_banner_save_after>                         		
+            </enterprise_banner_save_after>                             		
     	</events>
         <layout>
             <updates>
