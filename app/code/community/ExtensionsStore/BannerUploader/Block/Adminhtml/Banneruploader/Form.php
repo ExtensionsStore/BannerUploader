@@ -34,7 +34,7 @@ class ExtensionsStore_BannerUploader_Block_Adminhtml_Banneruploader_Form extends
 		
 		$className = 'banner-image';
 		$xpath = new DOMXPath ( $doc );
-		$imgs = $xpath->query ( "//*[@class='" . $className . "']" );
+		$imgs = $xpath->query ( "//*[contains(@class, '".$className."')]" );
 		$anchors = $doc->getElementsByTagName ( 'a' );
 		
 		$i = 0;

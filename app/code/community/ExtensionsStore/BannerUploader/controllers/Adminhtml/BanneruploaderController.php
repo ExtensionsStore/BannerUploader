@@ -203,7 +203,7 @@ class ExtensionsStore_BannerUploader_Adminhtml_BanneruploaderController extends 
 						
 						$className = 'banner-image';
 						$xpath = new DOMXPath ( $doc );
-						$imgs = $xpath->query ( "//*[@class='" . $className . "']" );
+						$imgs = $xpath->query ( "//*[contains(@class, '".$className."')]" );
 						
 						$anchors = $doc->getElementsByTagName ( 'a' );
 						
