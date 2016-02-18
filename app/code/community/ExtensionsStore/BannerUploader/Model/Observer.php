@@ -19,15 +19,18 @@ class ExtensionsStore_BannerUploader_Model_Observer
      */
     public function prepareWysiwygPluginConfig(Varien_Event_Observer $observer)
     {
-        $bannerId = (int)Mage::app()->getRequest()->getParam('id');
-        
-        if ($bannerId){
-            $config = $observer->getEvent()->getConfig();
-            
-            $settings = Mage::getModel('extensions_store_banneruploader/banneruploader_config')->getWysiwygPluginSettings($config);
-            $config->addData($settings);
-        }
-
+        $controllerName = Mage::app()->getRequest()->getControllerName();
+    	if ($controllerName=='banner'){
+    		$bannerId = (int)Mage::app()->getRequest()->getParam('id');
+    		
+    		if ($bannerId){
+    			$config = $observer->getEvent()->getConfig();
+    		
+    			$settings = Mage::getModel('extensions_store_banneruploader/banneruploader_config')->getWysiwygPluginSettings($config);
+    			$config->addData($settings);
+    		}
+    	}
+    	
         return $observer;
     }
     
