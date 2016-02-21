@@ -32,19 +32,41 @@ class ExtensionsStore_BannerUploader_Block_Adminhtml_Banneruploader_Form extends
 		$doc = new DOMDocument ();
 		$doc->loadHTML ( $content );
 		
-		$className = 'banner-image';
 		$xpath = new DOMXPath ( $doc );
-		$imgs = $xpath->query ( "//*[contains(@class, '".$className."')]" );
-		$anchors = $doc->getElementsByTagName ( 'a' );
+		$imgs = $xpath->query ( "//*[contains(@class, '".ExtensionsStore_BannerUploader_Model_Banner::BANNER_IMAGE_CLASS."')]" );
+		$anchors = $xpath->query ( "//*[contains(@class, '".ExtensionsStore_BannerUploader_Model_Banner::BANNER_LINK_CLASS."')]" );
+		$baseUrl = Mage::getBaseUrl ();
+		$baseUnsecureUrl = str_replace('https:','http:', $baseUrl);
+		$baseSecureUrl = str_replace('http:','https:', $baseUrl);
 		
 		$i = 0;
 		
 		foreach ( $imgs as $img ) {
 			
+			$increment = ($i) ? ' '.$i + 1 : '';
+			$anchor = $anchors->item ( $i );
+			
+			if ($anchor) {
+									
+				$href = $anchor->getAttribute ( 'href' );
+				$href = str_replace ( array($baseUnsecureUrl,$baseSecureUrl), '', $href );
+				$anchorTitle = $anchor->getAttribute ( 'title' );
+				$label = ($anchorTitle) ? $anchorTitle . ' Link' : $this->helper ( 'extensions_store_banneruploader' )->__ ( 'Banner Link' . $increment );
+				$title = $label;
+					
+				$file = $fieldset->addField ( 'banner_link_' . $i, 'text', array (
+						'label' => $label,
+						'title' => $title,
+						'name' => 'banner_link[' . $i . ']',
+						'required' => false,
+						'value' => $href
+				) );
+			}
+			
 			$src = $img->getAttribute ( 'src' );
 			$src = ($src) ? $src : $img->getAttribute ( 'srcset' );
 			$alt = $img->getAttribute ( 'alt' );
-			$label = ($alt) ? $alt . ' Image' : $this->helper ( 'extensions_store_banneruploader' )->__ ( 'Banner Image ' . $i );
+			$label = ($alt) ? $alt . ' Image' : $this->helper ( 'extensions_store_banneruploader' )->__ ( 'Banner Image' . $increment  );
 			$title = $label;
 			
 			$image = $fieldset->addField ( 'banner_image_' . $i, 'hidden', array (
@@ -57,27 +79,7 @@ class ExtensionsStore_BannerUploader_Block_Adminhtml_Banneruploader_Form extends
 					'name' => 'banner_file[' . $i . ']',
 					'required' => false,
 					'value' => $src 
-			) );
-			
-			if ($anchors->length == $imgs->length){
-				$anchor = $anchors->item ( $i );
-					
-				if (is_numeric ( strpos ( $anchor->getAttribute ( 'class' ), 'banner-link' ) )) {
-				
-					$href = $anchor->getAttribute ( 'href' );
-					$anchorTitle = $anchor->getAttribute ( 'title' );
-					$label = ($anchorTitle) ? $anchorTitle . ' Link' : $this->helper ( 'extensions_store_banneruploader' )->__ ( 'Banner Link ' . $i );
-					$title = $label;
-				
-					$file = $fieldset->addField ( 'banner_link_' . $i, 'text', array (
-							'label' => $label,
-							'title' => $title,
-							'name' => 'banner_link[' . $i . ']',
-							'required' => false,
-							'value' => $href
-					) );
-				}				
-			}
+			) );	
 			
 			$i ++;
 		}

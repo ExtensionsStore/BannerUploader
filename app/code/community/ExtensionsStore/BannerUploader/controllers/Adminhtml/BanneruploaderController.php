@@ -196,16 +196,13 @@ class ExtensionsStore_BannerUploader_Adminhtml_BanneruploaderController extends 
 					
 					try {
 						
-						$doc = new DOMDocument ();
+						$doc = new DOMDocument ('1.0');
 						$doc->loadHTML ( $content );
-						$doc->preserveWhiteSpace = false;
 						$doc->formatOutput = true;
 						
-						$className = 'banner-image';
 						$xpath = new DOMXPath ( $doc );
-						$imgs = $xpath->query ( "//*[contains(@class, '".$className."')]" );
-						
-						$anchors = $doc->getElementsByTagName ( 'a' );
+						$imgs = $xpath->query ( "//*[contains(@class, '".ExtensionsStore_BannerUploader_Model_Banner::BANNER_IMAGE_CLASS."')]" );
+						$anchors = $xpath->query ( "//*[contains(@class, '".ExtensionsStore_BannerUploader_Model_Banner::BANNER_LINK_CLASS."')]" );
 						
 						foreach ( $imgs as $i => $img ) {
 							
@@ -220,34 +217,32 @@ class ExtensionsStore_BannerUploader_Adminhtml_BanneruploaderController extends 
 							$attribute = ($img->hasAttribute ( 'srcset' )) ? 'srcset' : 'src';
 							
 							$img->setAttribute ( $attribute, $mediaTag );
-							
-							if ($anchors->length == $imgs->length) {
-								$anchor = $anchors->item ( $i );
-								if (is_numeric ( strpos ( $anchor->getAttribute ( 'class' ), 'banner-link' ) )) {
+						}
+						
+						foreach ($anchors as $i => $anchor){
+							$anchor = $anchors->item ( $i );
 									
-									if ($bannerLinks [$i]) {
-										
-										$baseUrl = Mage::getBaseUrl ();
-										$bannerLink = trim ( $bannerLinks [$i] );
-										$directUrl = str_replace ( $baseUrl, '', $bannerLink );
-										
-										$urlTag = "<!--store direct_url='" . $directUrl . "'-->";
-									} else {
-										
-										$urlTag = $anchor->getAttribute ( 'href' );
-									}
-									
-									$anchor->setAttribute ( 'href', $urlTag );
-								}
+							if ($bannerLinks [$i]) {
+						
+								$baseUrl = Mage::getBaseUrl ();
+								$bannerLink = trim ( $bannerLinks [$i] );
+								$directUrl = str_replace ( $baseUrl, '', $bannerLink );
+						
+								$urlTag = "<!--store direct_url='" . $directUrl . "'-->";
+							} else {
+						
+								$urlTag = $anchor->getAttribute ( 'href' );
 							}
+								
+							$anchor->setAttribute ( 'href', $urlTag );
 						}
 						
 						$body = $doc->getElementsByTagName ( 'body' )->item ( 0 );
 						
 						$newHtml = $doc->saveHTML ( $body->firstChild );
 						
-						// remove converted carriage returns
-						$newHtml = str_replace ( '&#13;', '', $newHtml );
+						// remove converted entities
+						$newHtml = str_replace ( array('&#13;','%20'), array('',' '), $newHtml );
 						
 						// put back double quotes in commented tags
 						$newHtml = preg_replace ( "/<!--([^>]*)[']([^>]*)[']-->/", '<!--$1"$2"-->', $newHtml );
@@ -255,10 +250,10 @@ class ExtensionsStore_BannerUploader_Adminhtml_BanneruploaderController extends 
 						// put back template delimiters
 						$newHtml = str_replace ( array (
 								'<!--',
-								'-->' 
+								'-->',
 						), array (
 								'{{',
-								'}}' 
+								'}}',
 						), $newHtml );
 												
 						$result ['error'] = false;
