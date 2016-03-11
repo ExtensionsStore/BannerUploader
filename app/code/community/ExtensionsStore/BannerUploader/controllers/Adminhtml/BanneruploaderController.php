@@ -211,10 +211,13 @@ class ExtensionsStore_BannerUploader_Adminhtml_BanneruploaderController extends 
 								$mediaTag = "<!--media url='" . $bannerImages [$i] . "'-->";
 							} else {
 								
-								$mediaTag = ($img->hasAttribute ( 'srcset' )) ? $img->getAttribute ( 'srcset' ) : $img->getAttribute ( 'src' );
+								$mediaTag = ($img->hasAttribute ( 'srcset' )) ? $img->getAttribute ( 'srcset' ) : $img->getAttribute ( 'data-src' );
+								$mediaTag = ($mediaTag) ? $mediaTag : $img->getAttribute ( 'src' );
 							}
 							
-							$attribute = ($img->hasAttribute ( 'srcset' )) ? 'srcset' : 'src';
+							$attribute = ($img->hasAttribute ( 'srcset' )) ? 'srcset' : null;
+							$attribute = (!$attribute && $img->hasAttribute ( 'data-src' )) ? 'data-src' : null;
+							$attribute = ($attribute) ? $attribute : 'src';
 							
 							$img->setAttribute ( $attribute, $mediaTag );
 						}

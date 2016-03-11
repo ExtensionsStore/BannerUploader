@@ -65,6 +65,7 @@ class ExtensionsStore_BannerUploader_Block_Adminhtml_Banneruploader_Form extends
 			
 			$src = $img->getAttribute ( 'src' );
 			$src = ($src) ? $src : $img->getAttribute ( 'srcset' );
+			$src = ($src) ? $src : $img->getAttribute ( 'data-src' );
 			$alt = $img->getAttribute ( 'alt' );
 			$label = ($alt) ? $alt . ' Image' : $this->helper ( 'extensions_store_banneruploader' )->__ ( 'Banner Image' . $increment  );
 			$title = $label;
