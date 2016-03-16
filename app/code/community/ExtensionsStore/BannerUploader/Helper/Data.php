@@ -17,7 +17,9 @@ class ExtensionsStore_BannerUploader_Helper_Data extends Mage_Core_Helper_Abstra
 		$backgroundStyle = '';
 		$bannerContent = Mage::getModel ( 'extensions_store_banneruploader/banner' )->load ( $bannerId, 'banner_id' );
 		if ($bannerContent->getId ()) {
-			$backgroundStyle = $bannerContent->getBackgroundStyle ();
+			$helper = Mage::helper('cms');
+			$processor = $helper->getPageTemplateProcessor();
+			$backgroundStyle = $processor->filter($bannerContent->getBackgroundStyle ());
 		}
 		return $backgroundStyle;
 	}
