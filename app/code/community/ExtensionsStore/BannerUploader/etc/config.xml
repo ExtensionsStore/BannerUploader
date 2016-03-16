@@ -11,7 +11,7 @@
 <config>
     <modules>
         <ExtensionsStore_BannerUploader>
-            <version>1.1.0</version>
+            <version>1.2.0</version>
         </ExtensionsStore_BannerUploader>
     </modules>
     <phpunit>
@@ -58,6 +58,14 @@
                     </extensions_store_banneruploader_save_template>
                 </observers>
             </enterprise_banner_save_after>                             		
+            <enterprise_banner_save_after>
+                <observers>
+                    <extensions_store_banneruploader_save_background_style>
+                        <class>extensions_store_banneruploader/observer</class>
+                        <method>saveBackgroundStyle</method>
+                    </extensions_store_banneruploader_save_background_style>
+                </observers>
+            </enterprise_banner_save_after>                        
     	</events>
         <layout>
             <updates>
@@ -72,6 +80,9 @@
             <extensions_store_banneruploader>
                 <class>ExtensionsStore_BannerUploader_Block</class>
             </extensions_store_banneruploader>       
+            <banneruploader>
+                <class>ExtensionsStore_BannerUploader_Block</class>
+            </banneruploader>                   
         </blocks>             
         <helpers>
             <extensions_store_banneruploader>
@@ -92,6 +103,9 @@
                     <template>
                         <table>extensions_store_banneruploader_template</table>
                     </template>
+                    <banner>
+                        <table>extensions_store_banneruploader_banner</table>
+                    </banner>                    
                 </entities>
             </extensions_store_banneruploader_resource>
         </models> 

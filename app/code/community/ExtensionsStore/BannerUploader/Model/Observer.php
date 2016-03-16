@@ -50,6 +50,7 @@ class ExtensionsStore_BannerUploader_Model_Observer
             $banner = Mage::registry('current_banner');
             if ($banner && $banner->getId()){
                 $template = Mage::getModel('extensions_store_banneruploader/template')->load($banner->getId(),'banner_id');
+                $bannerContent = Mage::getModel('extensions_store_banneruploader/banner')->load($banner->getId(),'banner_id');
             }
             
             $form = $block->getForm();
@@ -100,6 +101,15 @@ class ExtensionsStore_BannerUploader_Model_Observer
                     'values'                => Mage::getResourceModel('extensions_store_banneruploader/template_collection')->toOptionArray(),
                     'after_element_html' => '<script>bannerUploader.init("'.$formKey.'", "'.$templateUrl.'")</script>'
             ));            
+
+            //new background style field
+            $backgroundStyle = $fieldset->addField('background_style', 'text', array(
+            		'label'                 => Mage::helper('extensions_store_banneruploader')->__('Background Style'),
+            		'title'                 => Mage::helper('extensions_store_banneruploader')->__('Background Style'),
+            		'name'                  => 'background_style',
+            		'required'              => false,
+                    'value'                 => ($bannerContent && $bannerContent->getId()) ? $bannerContent->getBackgroundStyle() : '',
+            ));
             
             //reorder elements
             $elements = $fieldset->getElements();
@@ -110,11 +120,13 @@ class ExtensionsStore_BannerUploader_Model_Observer
                 $elements[2] = $deleteTemplate;
                 $elements[3] = $templateName;
                 $elements[4] = $loadTemplate;
-                $elements[5] = $contentField;
+                $elements[5] = $backgroundStyle;
+                $elements[6] = $contentField;
             } else{
                 $elements[2] = $templateName;
                 $elements[3] = $loadTemplate;
-                $elements[4] = $contentField;
+                $elements[4] = $backgroundStyle;
+                $elements[5] = $contentField;
             }
             
         }
@@ -146,7 +158,8 @@ class ExtensionsStore_BannerUploader_Model_Observer
                 
                 $template = Mage::getModel('extensions_store_banneruploader/template')->load($banner->getId(),'banner_id');
                 
-                $date = date('Y-m-d H:i:s');
+    			$date = date("Y-m-d H:i:s", Mage::getModel('core/date')->timestamp(time()));
+                
                 $template->setBannerId($banner->getId())
                     ->setName($templateName)
                     ->setContent($content)
@@ -172,7 +185,42 @@ class ExtensionsStore_BannerUploader_Model_Observer
                 Mage::log($e->getMessage(), null, 'extensions_store_banneruploader.log');
             }
         }
+        
+        return $observer;
+    }
+    
+    /**
+     * Save background style
+     *
+     * @see enterprise_banner_save_after
+     * @param Varien_Event_Observer $observer
+     * @return Varien_Event_Observer
+     */    
+    public function saveBackgroundStyle(Varien_Event_Observer $observer)
+    {
+        $banner = $observer->getBanner();
+    	$backgroundStyle = Mage::app()->getRequest()->getParam('background_style');
+    	if ($backgroundStyle){
+    	            
+            try {
                 
+                $model = Mage::getModel('extensions_store_banneruploader/banner')->load($banner->getId(),'banner_id');
+                
+    			$datetime = date("Y-m-d H:i:s", Mage::getModel('core/date')->timestamp(time()));
+                
+                if (!$model->getId()){
+                	$model->setDateCreated($datetime);                	
+                }
+                $model->setBannerId($banner->getId())
+                    ->setBackgroundStyle($backgroundStyle)
+                    ->setDateUpdated($datetime)
+                    ->save();
+                
+            } catch(Exception $e){
+                
+                Mage::log($e->getMessage(), null, 'extensions_store_banneruploader.log');
+            }
+    	}    	
         return $observer;
     }
     
